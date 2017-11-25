@@ -1,0 +1,10 @@
+Source: prometheus
+Section: net
+Priority: optional
+Maintainer: Jiri Tyr <jiri.tyr@gmail.com>
+Standards-Version: 4.1.1
+Homepage: https://prometheus.io/
+
+Package: prometheus
+Architecture: any
+Description: Monitoring system and time series database

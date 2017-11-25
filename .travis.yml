@@ -1,0 +1,37 @@
+---
+
+language: bash
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - >
+    if [ -n "$TRAVIS_TAG" ]; then
+      sudo apt-get install -y build-essential fakeroot;
+      openssl aes-256-cbc -K $encrypted_741831696b91_key -iv $encrypted_741831696b91_iv -in dist/gpg_key.priv.enc -out dist/gpg_key.priv -d;
+      gpg --import dist/gpg_key.priv;
+    fi
+
+script:
+  - >
+    if [ -n "$TRAVIS_TAG" ]; then
+      dist/build.sh;
+    fi
+
+deploy:
+  - provider: packagecloud
+    repository: prometheus-deb
+    username: jtyr
+    token:
+      secure: S8qJ6DOspjVpF7fZZc9kRyWj5JDwUVPjH21bfTMj6rv5ybQJ1B7m+qCPGGrQXfLD2cdS6ZvOYHKg4QEthLrj389oPhBH2LRNYt8MUGiD4gbVAJbqDA6N7NbZl/F6lyyVS2bC4dA38/WaZlC06r57k4V1JObvpuTY5Ul2Sg8/kQYufwYMSUJIybQLcUznV6y/pIWKg6SwnZ4MOXFOgWza3EFsGO4AB2hMM7amCqdI9glSVBd6XpW3VJbaq0qfbgXoV3t0lqTkp1uIoduywk7TaS4LTVnJFx7OwTnBb8lXZrf3M3PQbBzhtdpGZ4a1xU1hm7ikJOLiTKowEygFz+SOxwQXH8BCfhyC+DW7Y/D15ZZlzCW4+YjWpougutcc/Lt8auIvEeZWySSj5jT6chJr+Fg33fE44nXIcA2HDTrHrniZK61RCS5lccfuf6gjINwayNvbOQFSDQsMkVnPiUK0xpY4NkXmIGp0LLAg+HRl+s3VNWwiSmKz41aCBdQKkrR2ZzwV1KQMy6jr+h6ezx5oKJCX4FGwf54iQibh4cOqFst9Dla4N8oORmwqCb4kPeo4tqKl9GVdLMHhPIRsg8N+b+WMpGhPR6RfFes0akglcXjRl9lJHo59LoERdLckqjbxaRwbFClzsXqKl1gPn/8COrs4jLsWDziZ54za1unVay4=
+    dist: ubuntu/xenial
+    skip_cleanup: true
+    local-dir: /tmp/prometheus
+    package_glob: "*.deb"
+    on:
+      tags: true
+      repo: jtyr/prometheus-deb
+
+notifications:
+  email: false

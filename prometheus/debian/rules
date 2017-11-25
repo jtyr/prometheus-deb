@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+
+define checkdir
+    @test -f debian/rules || \
+    (echo Not in correct source directory; exit 1)
+endef
+
+define checkroot
+    @test $$(id -u) = 0 || (echo need root priviledges; exit 1)
+endef
+
+PACKAGE = prometheus
+TOP_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+SRC_DIR = $(TOP_DIR)/$(PACKAGE)
+DEB_DIR = $(TOP_DIR)/debian
+DEST_DIR = $(DEB_DIR)/$(PACKAGE)
+
+BIN_DIR = $(DEST_DIR)/usr/bin
+CONF_DIR = $(DEST_DIR)/etc/$(PACKAGE)
+DEFAULT_DIR = $(DEST_DIR)/etc/default
+DOCS_DIR = $(DEST_DIR)/usr/share/doc/$(PACKAGE)
+SYSD_DIR = $(DEST_DIR)/usr/lib/systemd/system
+SHARE_DIR = $(DEST_DIR)/usr/share/$(PACKAGE)
+
+build:
+
+binary:
+	$(checkdir)
+	$(checkroot)
+	mkdir -p $(DEST_DIR)/DEBIAN $(BIN_DIR) $(CONF_DIR) $(DEFAULT_DIR) $(DOCS_DIR) $(SYSD_DIR) $(SHARE_DIR)
+	install -Dm755 $(SRC_DIR)/$(PACKAGE) -t $(BIN_DIR)
+	install -Dm755 $(SRC_DIR)/promtool -t $(BIN_DIR)
+	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
+	install -Dm644 $(SRC_DIR)/NOTICE -t $(DOCS_DIR)
+	install -Dm644 $(SRC_DIR)/prometheus.yml -t $(CONF_DIR)
+	install -Dm755 $(DEB_DIR)/postinst -t $(DEST_DIR)/DEBIAN
+	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PACKAGE)
+	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PACKAGE).service
+	cp -r $(SRC_DIR)/console_libraries $(SHARE_DIR)
+	cp -r $(SRC_DIR)/consoles $(SHARE_DIR)
+	dpkg-gencontrol -P$(DEST_DIR)
+	cd $(DEST_DIR) && find . -type f ! -regex '.*DEBIAN/.*' -printf '%P\0' | xargs -r0 md5sum > DEBIAN/md5sums
+	dpkg-deb -b $(DEST_DIR) ../
+
+clean:
+	$(checkdir)
+	-rm -rf debian/$(PACKAGE)
+	-rm -f debian/files
+	-rm -f debian/substvars
+
+.PHONY: binary clean
