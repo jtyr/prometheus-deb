@@ -7,7 +7,7 @@ case "$1" in
     # Add prometheus user
     if ! getent passwd prometheus > /dev/null; then
         adduser --quiet --system --home /var/lib/prometheus \
-            --group --gecos "Prometheus daemon" prometheus || true
+            --group --gecos "Prometheus services" prometheus || true
     fi
   ;;
 
