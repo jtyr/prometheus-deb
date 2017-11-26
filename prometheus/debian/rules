@@ -32,7 +32,7 @@ binary:
 	install -Dm755 $(SRC_DIR)/promtool -t $(BIN_DIR)
 	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
 	install -Dm644 $(SRC_DIR)/NOTICE -t $(DOCS_DIR)
-	install -Dm644 $(SRC_DIR)/prometheus.yml -t $(CONF_DIR)
+	install -Dm644 $(SRC_DIR)/$(PACKAGE).yml -t $(CONF_DIR)
 	install -Dm755 $(DEB_DIR)/postinst -t $(DEST_DIR)/DEBIAN
 	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PACKAGE)
 	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PACKAGE).service
