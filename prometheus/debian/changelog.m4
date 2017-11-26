@@ -1,4 +1,4 @@
-prometheus (VER) stable; urgency=medium
+NAME (VER) stable; urgency=medium
 
   * Version bump to VER.
 

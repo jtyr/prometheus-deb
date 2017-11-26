@@ -36,7 +36,7 @@ curl -OL https://github.com/prometheus/$NAME/releases/download/v$VER_REL/$NAME-$
 tar -xvzf $NAME-$VER_REL.linux-amd64.tar.gz
 mv $NAME-$VER_REL.linux-amd64 $NAME
 
-m4 -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
+m4 -DNAME="$NAME" -DVER="$VER" -DDATE="$(date '+%a, %d %b %Y %H:%M:%S %z')" debian/changelog.m4 > debian/changelog
 dpkg-buildpackage -tc -b -kCA67951CD2BBE8AAE4210B72FB90C91F64BED28C
 
 mv "$TRAVIS_BUILD_DIR"/*.deb $TMP
