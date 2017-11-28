@@ -1,9 +1,10 @@
 prometheus-deb
 ===============
 
-DEB packages for products from [prometheus.io](https://prometheus.io/).
+DEB packages for tools from [prometheus.io](https://prometheus.io/).
 
 [![Build Status](https://travis-ci.org/jtyr/prometheus-deb.svg?branch=prometheus-2.0.0-1)](https://travis-ci.org/jtyr/prometheus-deb)
+[![Packagecloud](https://img.shields.io/badge/%E2%98%81-Packagecloud-707aed.svg)](https://packagecloud.io)
 
 
 Packages
@@ -18,8 +19,8 @@ Packages are built for the following products:
 Usage
 -----
 
-DEB packages produced from this Git repository are served by
-[PackageCloud](https://prometheus.io/). You can add the APT repository like
+DEB packages created from this Git repository are hosted by
+[Packagecloud](https://prometheus.io/). You can add the APT repository like
 this:
 
 ```shell
