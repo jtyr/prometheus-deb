@@ -9,18 +9,18 @@ define checkroot
     @test $$(id -u) = 0 || (echo need root priviledges; exit 1)
 endef
 
-PACKAGE = prometheus
+PRODUCT = prometheus
 TOP_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
-SRC_DIR = $(TOP_DIR)/$(PACKAGE)
+SRC_DIR = $(TOP_DIR)/$(PRODUCT)
 DEB_DIR = $(TOP_DIR)/debian
-DEST_DIR = $(DEB_DIR)/$(PACKAGE)
+DEST_DIR = $(DEB_DIR)/$(PRODUCT)
 
 BIN_DIR = $(DEST_DIR)/usr/bin
-CONF_DIR = $(DEST_DIR)/etc/$(PACKAGE)
+CONF_DIR = $(DEST_DIR)/etc/$(PRODUCT)
 DEFAULT_DIR = $(DEST_DIR)/etc/default
-DOCS_DIR = $(DEST_DIR)/usr/share/doc/$(PACKAGE)
+DOCS_DIR = $(DEST_DIR)/usr/share/doc/$(PRODUCT)
 SYSD_DIR = $(DEST_DIR)/usr/lib/systemd/system
-SHARE_DIR = $(DEST_DIR)/usr/share/$(PACKAGE)
+SHARE_DIR = $(DEST_DIR)/usr/share/$(PRODUCT)
 
 build:
 
@@ -28,14 +28,14 @@ binary:
 	$(checkdir)
 	$(checkroot)
 	mkdir -p $(DEST_DIR)/DEBIAN $(BIN_DIR) $(CONF_DIR) $(DEFAULT_DIR) $(DOCS_DIR) $(SYSD_DIR) $(SHARE_DIR)
-	install -Dm755 $(SRC_DIR)/$(PACKAGE) -t $(BIN_DIR)
+	install -Dm755 $(SRC_DIR)/$(PRODUCT) -t $(BIN_DIR)
 	install -Dm755 $(SRC_DIR)/promtool -t $(BIN_DIR)
 	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
 	install -Dm644 $(SRC_DIR)/NOTICE -t $(DOCS_DIR)
-	install -Dm644 $(SRC_DIR)/$(PACKAGE).yml -t $(CONF_DIR)
+	install -Dm644 $(SRC_DIR)/$(PRODUCT).yml -t $(CONF_DIR)
 	install -Dm755 $(DEB_DIR)/postinst -t $(DEST_DIR)/DEBIAN
-	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PACKAGE)
-	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PACKAGE).service
+	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PRODUCT)
+	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PRODUCT).service
 	cp -r $(SRC_DIR)/console_libraries $(SHARE_DIR)
 	cp -r $(SRC_DIR)/consoles $(SHARE_DIR)
 	dpkg-gencontrol -P$(DEST_DIR)
@@ -44,7 +44,7 @@ binary:
 
 clean:
 	$(checkdir)
-	-rm -rf debian/$(PACKAGE)
+	-rm -rf debian/$(PRODUCT)
 	-rm -f debian/files
 	-rm -f debian/substvars
 
