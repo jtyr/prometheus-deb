@@ -1,0 +1,10 @@
+Source: prometheus-pushgateway
+Section: net
+Priority: optional
+Maintainer: Jiri Tyr <jiri.tyr@gmail.com>
+Standards-Version: 4.1.1
+Homepage: https://prometheus.io/
+
+Package: prometheus-pushgateway
+Architecture: any
+Description: Push acceptor for ephemeral and batch jobs to expose their metrics to Prometheus

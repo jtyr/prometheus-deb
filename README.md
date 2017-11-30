@@ -14,6 +14,7 @@ Packages are built for the following products:
 
 - [Prometheus](https://github.com/prometheus/prometheus)
 - [Alertmanager](https://github.com/prometheus/alertmanager)
+- [Pushgateway](https://github.com/prometheus/pushgateway)
 
 
 Usage
