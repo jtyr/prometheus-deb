@@ -28,11 +28,9 @@ binary:
 	$(checkroot)
 	mkdir -p $(DEST_DIR)/DEBIAN $(BIN_DIR) $(CONF_DIR) $(DEFAULT_DIR) $(DOCS_DIR) $(SYSD_DIR)
 	install -Dm755 $(SRC_DIR)/$(PACKAGE) -t $(BIN_DIR)
-	install -Dm755 $(SRC_DIR)/amtool -t $(BIN_DIR)
 	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
 	install -Dm644 $(SRC_DIR)/NOTICE -t $(DOCS_DIR)
 	install -Dm755 $(DEB_DIR)/postinst -t $(DEST_DIR)/DEBIAN
-	install -Dm644 $(SRC_DIR)/simple.yml $(CONF_DIR)/$(PACKAGE).yml
 	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PACKAGE)
 	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PACKAGE).service
 	dpkg-gencontrol -P$(DEST_DIR)
