@@ -32,7 +32,7 @@ binary:
 	install -Dm644 $(SRC_DIR)/LICENSE -t $(DOCS_DIR)
 	install -Dm644 $(SRC_DIR)/NOTICE -t $(DOCS_DIR)
 	install -Dm755 $(DEB_DIR)/postinst -t $(DEST_DIR)/DEBIAN
-	install -Dm644 $(SRC_DIR)/simple.yml $(CONF_DIR)/$(PRODUCT).yml
+	install -Dm644 $(SRC_DIR)/$(PRODUCT).yml $(CONF_DIR)/$(PRODUCT).yml
 	install -Dm644 $(DEB_DIR)/default $(DEFAULT_DIR)/$(PRODUCT)
 	install -Dm644 $(DEB_DIR)/service $(SYSD_DIR)/$(PRODUCT).service
 	dpkg-gencontrol -P$(DEST_DIR)
